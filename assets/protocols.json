@@ -1,0 +1,7 @@
+{
+    "bulk_m6A-V1":{
+        "pattern": "L9C9U12",
+        "well96": "bclist96",
+        "well384": "bclist384"
+    }
+}
