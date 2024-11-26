@@ -1,6 +1,6 @@
-# singleron-RD/bulk_dynaseq pipeline parameters
+# singleron-RD/bulk_m6A pipeline parameters
 
-Processing AccuraCode dynascope sequencing data
+Processing AccuraCode m6A sequencing data
 
 ## Input/output options
 
@@ -19,7 +19,7 @@ Genome files and parameters.
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-------------|------|---------|----------|--------|
-| `fasta` | Path to genome fasta. | `string` |  |  |  |
+| `fasta` | Path to genome fasta. | `string` |  | True |  |
 | `gtf` | Path to genome gtf. | `string` |  | True |  |
 | `star_genome` | Path to STAR genome directory. Required if fasta and gtf are not provided. | `string` |  |  |  |
 | `genome_name` | The generated STAR genome index will be saved under this folder. It can then be used for future pipeline runs, reducing processing times. | `string` | star_genome |  |  |
@@ -30,8 +30,8 @@ Genome files and parameters.
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-------------|------|---------|----------|--------|
-| `protocol` | Predefined pattern and whitelist. <details><summary>Help</summary><small> If set to "customized", --pattern and --whitelist are required. </small></details>| `string` | bulk_dynaseq-V1 |  |  |
-| `well` | The AccuraCode dynascope wells used (384 or 96). | `integer` | 384 |  |  |
+| `protocol` | Predefined pattern and whitelist. <details><summary>Help</summary><small> If set to "customized", --pattern and --whitelist are required. </small></details>| `string` | bulk_m6A-V1 |  |  |
+| `well` | The AccuraCode m6A wells used (384 or 96). | `integer` | 384 |  |  |
 | `pattern` | A string to locate cell barcode and UMI in R1 read. For example "C9L16C9L16C9L1U12". <details><summary>Help</summary><small>C: cell barcode<br>L: Linker sequence between segments<br>U: UMI<br>T: poly T</small></details> | `string` |  |  |  |
 | `whitelist` | Barcode whitelist files. Multiple whitelists are seperated by whitespace. | `string` |  |  |  |
 
@@ -41,7 +41,6 @@ Genome files and parameters.
 |-----------|-------------|------|---------|----------|--------|
 | `soloFeatures` | Quantification of different transcriptomic features. <details><summary>Help</summary><small>https://github.com/alexdobin/STAR/issues/1460  </small></details> | `string` | GeneFull_Ex50pAS |  |  |
 | `soloCellFilter` | Cell-calling method. <details><summary>Help</summary><small>https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#cell-filtering-calling</small></details> | `string` | None |  |  |
-| `soloStrand` |  strandedness of the solo libraries | `string` | Forward |  |  |
 | `outFilterMatchNmin` | Alignment will be output only if the number of matched bases is higher than or equal to this value. <details><summary>Help</summary><small>Use default 50 to filter potential short prime sequences.</small></details> | `integer` | 50 |  |  |
 | `outSAMattributes` | Output tags in SAM/BAM. <details><summary>Help</summary><small>https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#bam-tags</small></details> | `string` | MD NH HI AS nM CR UR CB UB GX GN sF |  |  |
 | `outReadsUnmapped` |  output of unmapped and partially mapped (i.e. mapped only one mate of a paired end read) reads in separate file(s).(None or Fastx) | `string` | None |  |  |
@@ -51,10 +50,15 @@ Genome files and parameters.
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-------------|------|---------|----------|--------|
-| `conversion_type` | Conversion type, TC for dynaseq. | `string` | TC |  |  |
+| `conversion_type` | Conversion type, CT for m6A. | `string` | CT |  |  |
 | `basequalilty` | Min base quality of the read sequence. | `integer` | 20 |  |  |
-| `snp_threshold` | Snp threshold filter, greater than snp_threshold will be recognized as snp. | `number` | 0.5 |  |  |
-| `snp_min_depth` | Minimum depth to call a variant. | `integer` | 10 |  |  |
+| `DRACH_display` | The top DRACH of m6A site display in report. | `integer` | 3 |  |  |
+| `MAPQ` | Read MAPQ threshold filter, less than 255(MAPQ=255 for the unique mappers). | `integer` | 0 |  |  |
+| `min_m6A_depth` | Minimum depth to call a m6A site. | `integer` | 2 |  |  |
+| `min_coverage` | Minimum reads of coverage. | `integer` | 10 |  |  |
+| `min_m6A_threshold` | m6A threshold filter, greater than min_m6A_threshold will be recognized as m6A site. | `number` | 0.1 |  |  |
+| `max_m6A_threshold` | m6A threshold filter, less than min_m6A_threshold will be recognized as m6A. | `number` | 0.95 |  |  |
+| `m6A_check` | Check if the mutation site is behind the base A. | `string` |  |  |  |
 
 ## Quant options
 
@@ -62,8 +66,9 @@ Genome files and parameters.
 |-----------|-------------|------|---------|----------|--------|
 | `umi_cutoff` | If the UMI number exceeds the threshold, it is considered a valid well and reported. | `integer` | 500 | | |
 | `gene_cutoff` | If the gene number exceeds the threshold, it is considered a valid well and reported. | `integer` | 0 | | |
-| `snp_file` | Backgroud snp file.Can be multiple files, separated by commas. If this option is set, it is valid for all wells. | `string` | | | |
-| `snp_matchfile` | Backgroud snp file for each well.<details><summary>Help</summary><small> backgroud snp file for each well, one well per line, the format is  \"well,snp_file\". Can be multiple files, separated by commas. This parameter takes precedence over snp_file. </small></details>| `string` | | | |
+| `m6A_file` | m6A position file.<details><summary>Help</summary><small>If want to valid for all wells, must haver column name 'chrom' and 'loci', comma separated.If want to for each well, one well per line, no  column name, the format is "well,path_to_m6A_file", path_to_m6A_file must haver column name 'chrom' and 'loci', comma separated.</small></details> | `string` | | | |
+| `snp_file` | Snp position file. The format like m6A_file. | `string` | | | |
+| `well_file` | If additional file(m6A_file or snp_file) is one well per line, no column line. Like wellA,path_to_m6A_file, set `True` | `string` | | | |
 
 
 ## Optional modules
@@ -71,10 +76,9 @@ Genome files and parameters.
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-------------|------|---------|----------|--------|
 | `run_fastqc` | FastQC of raw reads. | `boolean` |  |  |  |
+| `run_fastqConvert` | library convert. 5'->3', just convert fastq R2. | `boolean` |  |  |  |
 
 ## Optional pipeline
-
-Split fastq based on the well provided.
 
 | Parameter | Description | Type | Default | Required | Hidden |
 |-----------|-------------|------|---------|----------|--------|

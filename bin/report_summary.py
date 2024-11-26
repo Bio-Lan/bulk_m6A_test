@@ -142,6 +142,7 @@ class Report_Summary:
     def parse_substitution_rate(self):
         df = pd.read_csv(self.args.sub_stats,header = 0 ,sep=",",index_col=0)
         df = df.loc[self.well_list,]
+        df = df.sort_values(by="C_to_T",ascending=False)
         
         box_dict = df.to_dict(orient='list')
         bar_dict = df.to_dict(orient="index")

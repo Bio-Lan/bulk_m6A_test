@@ -1,6 +1,3 @@
-
-
-
 - [Main Output](#main-output)
 - [modules](#modules)
   - [filter\_gtf](#filter_gtf)
@@ -11,6 +8,7 @@
   - [conversion\_summary](#conversion_summary)
   - [substitution](#substitution)
   - [quant](#quant)
+  - [report\_summary](#report_summary)
   - [multiqc-sgr](#multiqc-sgr)
   - [pipeline\_info](#pipeline_info)
   - [fastqc(Optional)](#fastqcoptional)
@@ -45,6 +43,8 @@ The filtering criteria is controlled by the argument `--keep_attributes`. The de
 - `*.filtered.gtf` GTF file after filtering.
 - `gtf_filter.log` log file containing number of lines filtered in the original gtf file.
 
+
+
 ## star_genome
 
 Generate STAR genome index. Detailed documents can be found in the [STAR Manual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf).
@@ -56,18 +56,23 @@ Generate STAR genome index. Detailed documents can be found in the [STAR Manual]
 
 - `{genome_name}/` STAR genome index folder.
 
+
+
 ## protocol_cmd
 
 Generate STARSolo command-line arguments accordingly.
 
 **Output files**
 
-- `{sample}.protocol.txt` Protocol.
 - `{sample}.protocol_cmd.txt` STARSolo command-line arguments.
+- `{sample}.bulk_m6A..protocol.stats.json` Protocol.
+
+
 
 ## starsolo
 
 Descriptions of parameters and files can be found in [STARSolo documents](https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md) and [STAR Manual](https://github.com/alexdobin/STAR/blob/master/doc/STARmanual.pdf).
+
 When you have questions, [STAR’s github issue](https://github.com/alexdobin/STAR/issues) is also a great place to find answers and help.
 
 > [!NOTE]
@@ -76,6 +81,9 @@ When you have questions, [STAR’s github issue](https://github.com/alexdobin/ST
 **Output files**
 
 - `{sample}.Aligned.sortedByCoord.out.bam` Bam file contains coordinate-sorted reads aligned to the genome.
+- `{sample}.Solo.out` Starsolo output file.
+
+
 
 ## conversion
 
@@ -84,12 +92,21 @@ Get conversion pos in each read.
 **Output files**
 
 - `{sample}.PosTag.bam` Bam file with conversion info.
-- `{sample}.PosTag.csv` TC conversion sites info in csv format.
-- `{sample}.snp.csv` Candidated snp sites.
+- `{well}.conversion_loci.csv` CT conversion sites info in csv format.
+
+
 
 ## conversion_summary
 
-- `{sample}.conversion.csv` The numbers of TC conversion sites and snp sites of each well.
+Filter conversion site
+
+**Output files**
+- `{well}.m6A_loci.csv` Sites were filtered and identified as m6A site.
+- `{well}.loci_in_gene.csv` m6A site number in gene.
+- `{well}.loci_motif.csv` m6A site DRACH motif.
+- `{sample}.conversion.csv` The numbers of CT conversion sites and m6A sites of each well.
+
+
 
 ## substitution
 
@@ -99,6 +116,8 @@ Computes the overall conversion rates in reads.
 
 - `{sample}.substitution.csv` Comma-separated table of the overall conversion rates.
 
+
+
 ## quant
 
 Quantify total RNA, unlabeled and labeled RNA.
@@ -106,6 +125,17 @@ Quantify total RNA, unlabeled and labeled RNA.
 **Output files**
 
 - `{sample}_{RNA}` The expression matrix of total/labeled/unlabeled in Matrix Market Exchange Formats.
+
+
+
+## report_summary
+
+Get multiqc report data.
+
+**Output files**
+
+- `{sample}.*.json` Summary file for pipeline analysis steps.
+
 
 ## multiqc-sgr
 
@@ -118,6 +148,8 @@ Quantify total RNA, unlabeled and labeled RNA.
 - `multiqc_report.html`: a standalone HTML file that can be viewed in your web browser.
 - `multiqc_data/`: directory containing parsed statistics from the different tools used in the pipeline.
 - `multiqc_plots/`: directory containing static images from the report in various formats.
+
+
 
 ## pipeline_info
 

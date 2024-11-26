@@ -203,7 +203,7 @@
                 },
                 "m6A_check": {
                     "type": "string",
-                    "description": "Check if the mutation site is behind the A base"
+                    "description": "Check if the mutation site is behind the base A"
                 }
             }
         },
