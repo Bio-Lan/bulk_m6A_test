@@ -66,7 +66,7 @@ Genome files and parameters.
 |-----------|-------------|------|---------|----------|--------|
 | `umi_cutoff` | If the UMI number exceeds the threshold, it is considered a valid well and reported. | `integer` | 500 | | |
 | `gene_cutoff` | If the gene number exceeds the threshold, it is considered a valid well and reported. | `integer` | 0 | | |
-| `m6A_file` | m6A position file.<details><summary>Help</summary><small>If want to valid for all wells, must haver column name 'chrom' and 'loci', comma separated.If want to for each well, one well per line, no  column name, the format is "well,path_to_m6A_file", path_to_m6A_file must haver column name 'chrom' and 'loci', comma separated.</small></details> | `string` | | | |
+| `m6A_file` | m6A position file.<details><summary>Help</summary><small>If want to valid for all wells, must haver column name 'chrom' and 'loci', comma separated.\t If want to for each well, one well per line, no  column name, the format is "well,path_to_m6A_file", path_to_m6A_file must haver column name 'chrom' and 'loci', comma separated.</small></details> | `string` | | | |
 | `snp_file` | Snp position file. The format like m6A_file. | `string` | | | |
 | `well_file` | If additional file(m6A_file or snp_file) is one well per line, no column line. Like wellA,path_to_m6A_file, set `True` | `string` | | | |
 
