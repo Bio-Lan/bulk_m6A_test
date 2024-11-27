@@ -110,7 +110,7 @@ class Quant:
         with open(file) as f:
             for i in f:
                 temp = i.strip().split(',')
-                self.well_file_check(temp,m6A_file)
+                self.well_file_check(temp,file)
                 site_list = self.get_loci_list(temp[1])
                 if temp[0] not in dict1.keys():
                     dict1[ temp[0] ] = {}

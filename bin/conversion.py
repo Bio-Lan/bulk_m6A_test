@@ -49,7 +49,7 @@ class Conversion:
         bam = pysam.AlignmentFile(self.outbam, 'rb')
         pysam.set_verbosity(save)
 
-        ref_fa = pysam.FastaFile(self.args.fastafile)
+        ref_fa = pysam.FastaFile(self.args.FASTA)
         for key in loci_dict.keys():
             loci_dict[key]['gene_name'] = ';'.join([str(i) for i in loci_dict[key]['gene_name']])
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     parser.add_argument("--wellBAM", required=True,
                         help='STARsolo split BAM(sortedByCoord),CB in tag must only one ,must have "MD" tag')
     parser.add_argument("--GTF", required=True)
-    parser.add_argument("--fastafile",required=True,
+    parser.add_argument("--FASTA",required=True,
                         help='Fasta file path')
     parser.add_argument("--conversion_type", type=str,default="CT",
                         help='conversion type, CT for bulk_m6A', required=False)

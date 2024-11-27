@@ -109,7 +109,9 @@ workflow BULK_M6A {
     // conversion
     split_bam = BAM_SPLIT.out.well_bam.transpose()
     CONVERSION(
-        split_bam
+        split_bam,
+        params.gtf,
+        params.fasta
     )
     ch_merge = CONVERSION.out.conv_wellloci.groupTuple()
     CONVERSION_SUMMARY(

@@ -7,6 +7,8 @@ process CONVERSION{
 
     input:
     tuple val(meta), path(well_bam)
+    path GTF
+    path FASTA
 
     output:
     tuple val(meta), path("${meta.id}/*.PosTag.bam"), emit:conv_wellbam
@@ -19,8 +21,8 @@ process CONVERSION{
     conversion.py \\
         --sample $prefix \\
         --wellBAM $well_bam \\
-        --GTF ${params.gtf} \\
-        --fastafile ${params.fasta} \\
+        --GTF $GTF \\
+        --FASTA $FASTA \\
         --conversion_type ${params.conversion_type} \\
         --basequalilty ${params.basequalilty} \\
         --MAPQ ${params.MAPQ}
