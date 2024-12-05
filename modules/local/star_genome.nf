@@ -16,7 +16,7 @@ process STAR_GENOME {
 
     output:
     path "$genome_name", emit: index
-    path "versions.yml", emit: versions
+    path "${genome_name}/versions.yml", emit: versions
 
     script:
     def args        = task.ext.args ?: ''
@@ -40,5 +40,7 @@ process STAR_GENOME {
     "${task.process}":
         star: \$(STAR --version | sed -e "s/STAR_//g")
     END_VERSIONS
+
+    mv versions.yml ./${genome_name}/
     """
 }
