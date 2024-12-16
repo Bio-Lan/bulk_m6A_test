@@ -105,17 +105,15 @@ nextflow run singleron-RD/bulk_m6A \
  -profile docker
 ```
 Optional:  
-``--split_to_well `true` ``  
-split fastq to well level.  
+``--split_to_well `true` ``  Split fastq to well level. Output: {sub_sample}/well/{wellBC}_R(1/2).fastq
 
-`path_to_split_information_file`:  
-The path must be full path of the file. The file has to be a tab-delimited file with 3 columns, and a header row as shown below.
+`--split_inf` It mus be full path of the file. The file has to be a comma-separated file with 3 columns, and a header row as shown below.
 
-| Column     | Description                                                                              |
-| ---------- | ---------------------------------------------------------------------------------------- |
-| raw_sample | It must be the same as sample name in column `sample` of `samplesheet.csv`.                    |
-| well       | If read barcode belongs to these wells, the read will be output into the same sub-fastq. |
-| sub_sample | Custom sample name.It will be the prefix of the sub-fastq.                               |
+| Column     | Description                                                                 |
+| ---------- | --------------------------------------------------------------------------- |
+| sample     | It must be the same as `sample` in samplesheet.                             |
+| sub_sample | Custom sample name.It will be the prefix of the sub-fastq.                  |
+| wellBC     | It mus be full path of the BC file.The format is one well barcode per line. |
 
 > [!NOTE]
 > raw_sample must be the same as sample in the samplesheet.  

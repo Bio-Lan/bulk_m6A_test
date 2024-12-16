@@ -2,7 +2,7 @@ process SPLIT_FASTQ {
     tag "$meta.id"
     label 'process_medium'
 
-    conda 'conda-forge::pandas==2.2.1 bioconda::pysam==0.22.1 conda-forge::xopen==2.0.1'
+    conda 'conda-forge::pandas==2.2.1 bioconda::pyfastx==2.1.0'
     container "qaqlans/sgr-accura-1"
     
     input:
@@ -27,9 +27,7 @@ process SPLIT_FASTQ {
         --split_inf $split_inf \\
         --assets_dir $assets_dir \\
         --protocol $protocol \\
-        --well ${params.well} \\
         --pattern ${params.pattern} \\
-        --whitelist \"${params.whitelist}\" \\
         $args
     """
 }
